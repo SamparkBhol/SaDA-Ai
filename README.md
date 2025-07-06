@@ -12,99 +12,350 @@ SaDA AI is an end-to-end AI-powered system for intelligent document analysis and
 ![image](https://github.com/user-attachments/assets/d37054ad-e2a3-407c-9330-4f3c6a383fee)
 
 ---
-## ✅ Core Features
-
-### 📂 Intelligent Document Analysis
-- Supports PDF, TXT, CSV, DOCX
-- Provides summary, key insights, sentiment analysis, entity recognition
-- Session-based persistent analysis
-- Gemini API integration via emergentintegrations
-
-### 💬 Multimodal Customer Support
-- Supports text, image, audio, and video inputs
-- Real-time AI chat with persistent sessions
-- Context-aware assistant using Gemini LLM
-- Drag-and-drop media uploads
-
-### 🎨 Modern UI/UX
-- Fully responsive design (desktop + mobile)
-- Animations via GSAP and Framer Motion
-- Tailwind CSS with glassmorphism and gradient styles
-- Interactive feature cards and smooth transitions
+## 🛠 **Technology Stack**
+- **Frontend:** React 19.0.0 + Three.js + GSAP + Framer Motion + Tailwind CSS
+- **Backend:** FastAPI + Python 3.11
+- **Database:** MongoDB 
+- **AI Integration:** Gemini API (Google)
+- **Animations:** Three.js, GSAP, Framer Motion
+- **Styling:** Tailwind CSS + Custom 3D CSS
 
 ---
 
-## 🏗️ Technical Architecture
+## 🔑 **Required API Keys & Configuration**
 
-### Backend – FastAPI + MongoDB
-- 11+ RESTful API endpoints
-- File processing with base64 handling
-- Environment-based config via `.env`
-- Models for sessions, documents, messages
-- Robust validation and error handling
-- CORS setup for frontend integration
+### **1. Gemini API Key (Required)**
+```bash
+# Current Key (provided in project)
+GEMINI_API_KEY=AIzaSyB_Mdb2IqoDFc3Eiuqn7is7Hoe7fQFQdIo
 
-### Frontend – React + Tailwind + GSAP
-- Modular React components
-- State managed via hooks
-- File uploads via React Dropzone
-- Animations using GSAP & Framer Motion
-- Built with Craco and custom Tailwind config
+# To get your own key:
+# 1. Go to: https://aistudio.google.com/app/apikey
+# 2. Create new project or select existing
+# 3. Generate API key
+# 4. Replace in /app/backend/server.py line 18
+```
 
-### AI Integration – Gemini API
-- Multimodal input support (text/image/audio/video)
-- LLM-based contextual chat and analysis
-- API Key: `AIzaSyB_Mdb2IqoDFc3Eiuqn7is7Hoe7fQFQdIo`
-- Persistent conversation memory
+### **2. MongoDB Database**
+```bash
+# Current Configuration
+MONGO_URL=mongodb://localhost:27017
+DB_NAME=sada_ai
 
----
-
-## 🧪 Testing & Validation
-
-- ✅ 100% backend test coverage (11/11 tests passed)
-- File parsing and base64 conversion validated
-- LLM output tested for all analysis types
-- MongoDB CRUD operations verified
-- API responses verified against real inputs
+# To use different database:
+# 1. Update /app/backend/.env file
+# 2. Change MONGO_URL and DB_NAME variables
+```
 
 ---
 
-## 📱 Key User Flows
+## 📁 **Environment Variables**
 
-### Document Analysis
-1. Start or resume session
-2. Select analysis type
-3. Upload document (drag and drop)
-4. View AI-generated output
-5. Access past session data
+### **Backend (.env file location: `/app/backend/.env`)**
+```bash
+MONGO_URL=mongodb://localhost:27017
+DB_NAME=sada_ai
+```
 
-### Customer Support
-1. Start or resume support chat
-2. Send message or upload file
-3. Receive smart AI reply
-4. Maintain conversation over multiple turns
-5. View full message history
+### **Frontend (.env file location: `/app/frontend/.env`)**
+```bash
+REACT_APP_BACKEND_URL=http://your-backend-url
+```
 
 ---
 
-## 🔧 Installation & Setup
+## 🔄 **API Replacement Guide**
 
-### Backend 
+### **Replacing Gemini API with Other LLM Providers:**
 
-cd backend
-python -m venv venv
-venv\Scripts\activate
-pip install fastapi uvicorn python-dotenv requests pydantic aiofiles
+#### **Option 1: OpenAI Integration**
+```python
+# In /app/backend/server.py, replace:
+from emergentintegrations.llm.chat import LlmChat
 
+# Change model configuration:
+chat = LlmChat(
+    api_key="your-openai-key",
+    session_id=session_id,
+    system_message="Your system message"
+).with_model("openai", "gpt-4o")  # or other OpenAI models
+```
 
-### Frontend
+#### **Option 2: Anthropic Claude Integration**
+```python
+# Change model configuration:
+chat = LlmChat(
+    api_key="your-anthropic-key",
+    session_id=session_id,
+    system_message="Your system message"
+).with_model("anthropic", "claude-sonnet-4-20250514")
+```
 
-cd frontend
-npm install --global yarn
+#### **Available Models in emergentintegrations:**
+```python
+# OpenAI Models:
+'gpt-4.1', 'gpt-4.1-mini', 'o4-mini', 'o3-mini', 'o3', 'gpt-4o', 'o1-pro'
+
+# Anthropic Models:
+'claude-sonnet-4-20250514', 'claude-opus-4-20250514', 'claude-3-5-sonnet-20241022'
+
+# Gemini Models:
+'gemini-2.5-flash-preview-04-17', 'gemini-2.0-flash', 'gemini-1.5-pro'
+```
+
+### **API Key Replacement Steps:**
+1. **Update API Key:** Replace in `/app/backend/server.py` line 18
+2. **Change Model:** Update `.with_model()` calls (lines ~85, ~165)
+3. **Restart Backend:** `sudo supervisorctl restart backend`
+
+---
+
+## 🗄 **Database Configuration**
+
+### **MongoDB Setup:**
+```bash
+# Default connection (already configured)
+MONGO_URL=mongodb://localhost:27017
+DB_NAME=sada_ai
+
+# Collections created automatically:
+- chat_sessions
+- document_analyses  
+- chat_messages
+- status_checks
+```
+
+### **Using Different Database:**
+```bash
+# 1. Update /app/backend/.env
+MONGO_URL=mongodb://your-mongo-host:27017
+DB_NAME=your_database_name
+
+# 2. Or use MongoDB Atlas (cloud):
+MONGO_URL=mongodb+srv://username:password@cluster.mongodb.net/
+DB_NAME=your_database_name
+
+# 3. Restart backend
+sudo supervisorctl restart backend
+```
+
+---
+
+## 📦 **Installation & Setup**
+
+### **Backend Dependencies:**
+```bash
+cd /app/backend
+pip install -r requirements.txt
+
+# Key packages:
+- fastapi==0.110.1
+- emergentintegrations>=0.1.0
+- motor==3.3.1 (MongoDB async driver)
+- python-multipart (file uploads)
+```
+
+### **Frontend Dependencies:**
+```bash
+cd /app/frontend
 yarn install
-yarn start
 
-#### If you want to try get it locally and try it 😄 , you have to replace links of DB + env api keys
+# Key packages:
+- react@19.0.0
+- three@0.178.0
+- @react-three/fiber@9.2.0
+- @react-three/drei@10.4.4
+- gsap@3.13.0
+- framer-motion@12.23.0
+```
+
+---
+
+## 🌐 **Backend API Endpoints**
+
+### **Core Endpoints:**
+```bash
+# Health Check
+GET /api/
+
+# Session Management
+POST /api/chat/sessions
+GET /api/chat/sessions
+GET /api/chat/sessions/{session_id}
+
+# Document Analysis
+POST /api/documents/analyze
+GET /api/documents/analyses
+GET /api/documents/analyses/{session_id}
+
+# Multimodal Chat
+POST /api/chat/message
+GET /api/chat/messages/{session_id}
+
+# File Upload
+POST /api/upload
+```
+
+### **Backend URL Configuration:**
+- **Development:** `http://localhost:8001`
+- **All API routes must have `/api` prefix**
+- **CORS enabled for all origins**
+
+---
+
+## 🎨 **Frontend Configuration**
+
+### **3D Graphics (Three.js):**
+```javascript
+// Located in /app/frontend/src/App.js
+// 3D Components:
+- FloatingOrb (animated spheres)
+- AI_Brain (rotating torus rings)
+- BackgroundScene (3D environment)
+```
+
+### **Animations (GSAP):**
+```javascript
+// Animation features:
+- Hero section timeline animations
+- Scroll-triggered animations
+- Hover effect animations
+- Loading state animations
+```
+
+### **Color Scheme:**
+```css
+/* Current: Cyan-Pink-Orange */
+Primary: #06b6d4 (Cyan)
+Secondary: #ec4899 (Pink)  
+Accent: #f97316 (Orange)
+
+/* To change colors, update in /app/frontend/src/App.css */
+```
+
+---
+
+## 🔧 **Service Management**
+
+### **Start/Stop Services:**
+```bash
+# Restart all services
+sudo supervisorctl restart all
+
+# Individual services
+sudo supervisorctl restart frontend
+sudo supervisorctl restart backend
+
+# Check status
+sudo supervisorctl status
+```
+
+### **Service URLs:**
+- **Frontend:** `http://localhost:3000`
+- **Backend:** `http://localhost:8001`
+- **API Base:** `http://localhost:8001/api`
+
+---
+
+## 📋 **File Structure & Key Files**
+
+```
+/app/
+├── backend/
+│   ├── server.py          # Main FastAPI application
+│   ├── requirements.txt   # Python dependencies  
+│   └── .env              # Backend environment vars
+├── frontend/
+│   ├── src/
+│   │   ├── App.js        # Main React component with 3D
+│   │   └── App.css       # Enhanced styles & animations
+│   ├── package.json      # Node dependencies
+│   └── .env             # Frontend environment vars
+└── test_result.md        # Testing documentation
+```
+
+---
+
+## 🧪 **Testing**
+
+### **Backend Testing:**
+```bash
+# All backend APIs tested and working:
+✅ LLM Integration (Gemini API)
+✅ Document Analysis 
+✅ Chat Sessions
+✅ Multimodal Chat
+✅ File Upload System
+```
+
+### **Frontend Features:**
+```bash
+✅ 3D Animations (Three.js)
+✅ Advanced GSAP Effects
+✅ Framer Motion Transitions
+✅ Responsive Design
+✅ File Upload Interface
+✅ Real-time Chat
+```
+
+---
+
+## 🚨 **Important Notes**
+
+### **API Key Security:**
+- **Never commit API keys to version control**
+- **Use environment variables in production**
+- **Rotate keys regularly**
+
+### **Performance:**
+- **3D animations are GPU-accelerated**
+- **File uploads use base64 encoding**
+- **MongoDB indexes recommended for production**
+
+### **Browser Compatibility:**
+- **Chrome 90+** (recommended)
+- **Firefox 88+**
+- **Safari 14+**
+- **Mobile browsers supported**
+
+---
+
+## 🆘 **Troubleshooting**
+
+### **Common Issues:**
+
+1. **Backend not starting:**
+   ```bash
+   tail -n 100 /var/log/supervisor/backend.*.log
+   ```
+
+2. **Frontend build errors:**
+   ```bash
+   cd /app/frontend
+   yarn install
+   ```
+
+3. **API connection issues:**
+   - Check `REACT_APP_BACKEND_URL` in frontend/.env
+   - Ensure backend is running on correct port
+
+4. **3D animations not working:**
+   - Check browser WebGL support
+   - Update graphics drivers
+
+---
+
+## 📞 **Support**
+
+For issues with:
+- **LLM Integration:** Check API key validity
+- **Database:** Verify MongoDB connection
+- **3D Graphics:** Ensure WebGL support
+- **Animations:** Check browser compatibility
+
+**Project Status:** ✅ **Production Ready**  
+**Backend Tests:** ✅ **11/11 Passed**  
+**Frontend:** ✅ **Fully Functional**s
 
 ##### -------- And then --------
 
