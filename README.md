@@ -104,6 +104,8 @@ npm install --global yarn
 yarn install
 yarn start
 
-#### -------- And then --------
+#### If you want to try get it locally and try it 😄 , you have to replace links of DB + env api keys
+
+##### -------- And then --------
 
 > **Status:** ✅ Ok! all ready to go .....
