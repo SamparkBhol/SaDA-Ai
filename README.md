@@ -5,7 +5,13 @@
 SaDA AI is an end-to-end AI-powered system for intelligent document analysis and multimodal customer support automation. It combines advanced LLM integrations with a modern, animated React frontend and robust backend using FastAPI. The system provides real-time chat, smart analysis of documents, and intuitive user experiences.
 
 ---
+### Screenshots
+![image](https://github.com/user-attachments/assets/d2ecda65-38a4-4fff-9109-2f2aa67af482)
+![image](https://github.com/user-attachments/assets/f6877bdc-11c2-4874-a678-2e353fdf27ac)
+![image](https://github.com/user-attachments/assets/4c094cd0-89f6-4807-bbdc-0974c56ca00d)
+![image](https://github.com/user-attachments/assets/d37054ad-e2a3-407c-9330-4f3c6a383fee)
 
+---
 ## ✅ Core Features
 
 ### 📂 Intelligent Document Analysis
