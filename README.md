@@ -70,8 +70,6 @@ REACT_APP_BACKEND_URL=http://your-backend-url
 
 #### **Option 1: OpenAI Integration**
 ```python
-# In /app/backend/server.py, replace:
-from emergentintegrations.llm.chat import LlmChat
 
 # Change model configuration:
 chat = LlmChat(
@@ -91,7 +89,7 @@ chat = LlmChat(
 ).with_model("anthropic", "claude-sonnet-4-20250514")
 ```
 
-#### **Available Models in emergentintegrations:**
+#### **Available Models:**
 ```python
 # OpenAI Models:
 'gpt-4.1', 'gpt-4.1-mini', 'o4-mini', 'o3-mini', 'o3', 'gpt-4o', 'o1-pro'
@@ -150,7 +148,6 @@ pip install -r requirements.txt
 
 # Key packages:
 - fastapi==0.110.1
-- emergentintegrations>=0.1.0
 - motor==3.3.1 (MongoDB async driver)
 - python-multipart (file uploads)
 ```
