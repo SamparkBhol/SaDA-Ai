@@ -27,7 +27,8 @@ SaDA AI is an end-to-end AI-powered system for intelligent document analysis and
 ### **1. Gemini API Key (Required)**
 ```bash
 # Current Key (provided in project)
-GEMINI_API_KEY=AIzaSyB_Mdb2IqoDFc3Eiuqn7is7Hoe7fQFQdIo
+GEMINI_API_KEY=A...
+
 
 # To get your own key:
 # 1. Go to: https://aistudio.google.com/app/apikey
